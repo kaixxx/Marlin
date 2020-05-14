@@ -43,8 +43,8 @@
 #define X_DIAG_PIN                         P1_29  // X-STOP
 #define Y_DIAG_PIN                         P1_28  // Y-STOP
 #define Z_DIAG_PIN                         P1_27  // Z-STOP
-#define E0_DIAG_PIN                        P1_26  // E0DET
-#define E1_DIAG_PIN                        P1_25  // E1DET
+//#define E0_DIAG_PIN                        P1_26  // E0DET
+//#define E1_DIAG_PIN                        P1_25  // E1DET
 
 //
 // Limit Switches
@@ -324,11 +324,22 @@
 
 /**
  * Special pins
- *   P1_30  (37) (NOT 5V tolerant)
+ *   P1_30  (37) (NOT 5V tolerant) 
  *   P1_31  (49) (NOT 5V tolerant)
- *   P0_27  (57) (Open collector)
+ *   P0_27  (57) (Open collector) => SPINDLE_LASER_ENA_PIN, see below
  *   P0_28  (58) (Open collector)
  */
+
+//
+// M3/M4/M5 - Spindle/Laser Control
+//
+#if HAS_CUTTER && !PIN_EXISTS(SPINDLE_LASER_ENA)
+  #define SPINDLE_LASER_ENA_PIN       P0_27  // I don't use this, but if used: Pin should have a pullup/pulldown!
+  #define SPINDLE_LASER_PWM_PIN       P2_03  // This is the FAN_PIN (MUST BE HARDWARE PWM)
+  //#define SPINDLE_DIR_PIN                    // I don't use this
+#endif
+
+
 
 //
 // Include common SKR pins
